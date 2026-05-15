@@ -1,0 +1,545 @@
+{
+  "gameConfig": {
+    "title": "PetQuest",
+    "subtitle": "Your virtual companion awaits",
+    "version": "1.1.0",
+    "targetAudience": "Ages 16 and under",
+    "startingCoins": 50,
+    "defaultBudget": 100,
+    "budgetOptions": [50, 100, 200, 500],
+    "statDecayInterval": 2000,
+    "petAutoMoveInterval": 2800,
+    "roomAutoMoveInterval": 2500,
+    "reactionDuration": 1200
+  },
+
+  "initialStats": {
+    "hunger": 80,
+    "happiness": 80,
+    "energy": 80,
+    "health": 80,
+    "cleanliness": 80
+  },
+
+  "statDecayRates": {
+    "hunger": 0.3,
+    "happiness": 0.2,
+    "energy": 0.15,
+    "health": 0.05,
+    "healthWhenHungry": 0.3,
+    "cleanliness": 0.1,
+    "hungerThresholdForHealthDecay": 20
+  },
+
+  "statDefinitions": [
+    { "key": "hunger", "label": "Hunger", "color": "#FF9800", "icon": "🍖" },
+    { "key": "happiness", "label": "Happiness", "color": "#4CAF50", "icon": "😊" },
+    { "key": "energy", "label": "Energy", "color": "#9C27B0", "icon": "⚡" },
+    { "key": "health", "label": "Health", "color": "#F44336", "icon": "❤️" },
+    { "key": "cleanliness", "label": "Cleanliness", "color": "#2196F3", "icon": "🫧" }
+  ],
+
+  "moodThresholds": [
+    { "minAvg": 75, "mood": "happy", "emoji": "😄", "label": "Thriving!", "color": "#4CAF50" },
+    { "minAvg": 55, "mood": "neutral", "emoji": "😊", "label": "Happy", "color": "#8BC34A" },
+    { "minAvg": 35, "mood": "sad", "emoji": "😐", "label": "Okay", "color": "#FF9800" },
+    { "minAvg": 0, "mood": "sick", "emoji": "😢", "label": "Needs Care!", "color": "#F44336" }
+  ],
+
+  "pets": [
+    {
+      "id": "dog",
+      "name": "Dog",
+      "emoji": "🐕",
+      "color": "#C4813A",
+      "background": "park",
+      "description": "A loyal and playful companion who loves the outdoors."
+    },
+    {
+      "id": "cat",
+      "name": "Cat",
+      "emoji": "🐈",
+      "color": "#888888",
+      "background": "apartment",
+      "description": "An independent and graceful friend who enjoys cozy spaces."
+    },
+    {
+      "id": "fish",
+      "name": "Fish",
+      "emoji": "🐠",
+      "color": "#2196F3",
+      "background": "aquarium",
+      "description": "A colorful aquatic buddy living in a beautiful aquarium."
+    },
+    {
+      "id": "dragon",
+      "name": "Dragon",
+      "emoji": "🐉",
+      "color": "#E64A19",
+      "background": "cave",
+      "description": "A mythical fire-breathing creature from an enchanted cave."
+    }
+  ],
+
+  "actions": [
+    {
+      "id": "feed",
+      "label": "Feed",
+      "icon": "🍖",
+      "color": "#FF9800",
+      "roomName": "Kitchen",
+      "description": "Visit the kitchen to feed your pet from a variety of meals.",
+      "primaryStat": "hunger",
+      "secondaryStat": "health",
+      "secondaryMultiplier": 0.15
+    },
+    {
+      "id": "play",
+      "label": "Play",
+      "icon": "🎾",
+      "color": "#4CAF50",
+      "roomName": "Play Area",
+      "description": "Take your pet to the play area for fun and exercise.",
+      "primaryStat": "happiness",
+      "secondaryStat": "energy",
+      "secondaryMultiplier": -0.3
+    },
+    {
+      "id": "rest",
+      "label": "Rest",
+      "icon": "💤",
+      "color": "#9C27B0",
+      "roomName": "Bedroom",
+      "description": "Let your pet rest in the bedroom to restore energy.",
+      "primaryStat": "energy",
+      "secondaryStat": "happiness",
+      "secondaryMultiplier": 0.1
+    },
+    {
+      "id": "clean",
+      "label": "Clean",
+      "icon": "🛁",
+      "color": "#2196F3",
+      "roomName": "Bathroom",
+      "description": "Take your pet to the bathroom for grooming and cleaning.",
+      "primaryStat": "cleanliness",
+      "secondaryStat": "health",
+      "secondaryMultiplier": 0.1
+    },
+    {
+      "id": "vet",
+      "label": "Vet",
+      "icon": "💊",
+      "color": "#F44336",
+      "roomName": "Vet Clinic",
+      "description": "Visit the vet clinic for health checkups and treatments.",
+      "primaryStat": "health",
+      "secondaryStat": "cleanliness",
+      "secondaryMultiplier": 0.2
+    }
+  ],
+
+  "foodMenus": {
+    "dog": [
+      { "id": "dog_food_1", "name": "Kibble", "icon": "🥣", "cost": 2, "boost": 15, "description": "Standard dry food" },
+      { "id": "dog_food_2", "name": "Steak", "icon": "🥩", "cost": 8, "boost": 35, "description": "Premium cut" },
+      { "id": "dog_food_3", "name": "Bone", "icon": "🦴", "cost": 3, "boost": 18, "description": "Crunchy treat" },
+      { "id": "dog_food_4", "name": "Dog Biscuit", "icon": "🍪", "cost": 1, "boost": 10, "description": "Light snack" },
+      { "id": "dog_food_5", "name": "Chicken", "icon": "🍗", "cost": 5, "boost": 25, "description": "Grilled & juicy" },
+      { "id": "dog_food_6", "name": "Wet Food", "icon": "🥫", "cost": 4, "boost": 22, "description": "Savory blend" }
+    ],
+    "cat": [
+      { "id": "cat_food_1", "name": "Tuna", "icon": "🐟", "cost": 4, "boost": 25, "description": "Fresh catch" },
+      { "id": "cat_food_2", "name": "Cat Kibble", "icon": "🥣", "cost": 2, "boost": 15, "description": "Crunchy bites" },
+      { "id": "cat_food_3", "name": "Salmon", "icon": "🍣", "cost": 7, "boost": 32, "description": "Premium fillet" },
+      { "id": "cat_food_4", "name": "Milk", "icon": "🥛", "cost": 1, "boost": 8, "description": "Warm & creamy" },
+      { "id": "cat_food_5", "name": "Chicken Pâté", "icon": "🍖", "cost": 5, "boost": 28, "description": "Smooth blend" },
+      { "id": "cat_food_6", "name": "Treat Stick", "icon": "🥢", "cost": 2, "boost": 12, "description": "Chewy delight" }
+    ],
+    "fish": [
+      { "id": "fish_food_1", "name": "Fish Flakes", "icon": "✨", "cost": 1, "boost": 12, "description": "Daily staple" },
+      { "id": "fish_food_2", "name": "Bloodworms", "icon": "🪱", "cost": 3, "boost": 22, "description": "Protein rich" },
+      { "id": "fish_food_3", "name": "Brine Shrimp", "icon": "🦐", "cost": 4, "boost": 28, "description": "Live & fresh" },
+      { "id": "fish_food_4", "name": "Algae Wafer", "icon": "🟢", "cost": 2, "boost": 15, "description": "Plant-based" },
+      { "id": "fish_food_5", "name": "Tubifex", "icon": "🧬", "cost": 5, "boost": 30, "description": "Premium worms" },
+      { "id": "fish_food_6", "name": "Daphnia", "icon": "🫧", "cost": 3, "boost": 20, "description": "Micro crustacean" }
+    ],
+    "dragon": [
+      { "id": "dragon_food_1", "name": "Fire Pepper", "icon": "🌶️", "cost": 3, "boost": 20, "description": "Spicy & hot" },
+      { "id": "dragon_food_2", "name": "Raw Meat", "icon": "🥩", "cost": 6, "boost": 30, "description": "Fresh game" },
+      { "id": "dragon_food_3", "name": "Lava Cake", "icon": "🍰", "cost": 8, "boost": 35, "description": "Molten treat" },
+      { "id": "dragon_food_4", "name": "Crystal Fruit", "icon": "💎", "cost": 10, "boost": 40, "description": "Magical energy" },
+      { "id": "dragon_food_5", "name": "Charcoal", "icon": "⬛", "cost": 2, "boost": 12, "description": "Fire starter" },
+      { "id": "dragon_food_6", "name": "Phoenix Egg", "icon": "🥚", "cost": 12, "boost": 45, "description": "Legendary meal" }
+    ]
+  },
+
+  "playItems": {
+    "dog": [
+      { "id": "dog_play_1", "name": "Fetch Ball", "icon": "🎾", "cost": 2, "boost": 20, "description": "Throw and retrieve" },
+      { "id": "dog_play_2", "name": "Frisbee", "icon": "🥏", "cost": 3, "boost": 25, "description": "Disc catching fun" },
+      { "id": "dog_play_3", "name": "Tug Rope", "icon": "🪢", "cost": 2, "boost": 18, "description": "Pull and tug game" },
+      { "id": "dog_play_4", "name": "Squeaky Toy", "icon": "🧸", "cost": 4, "boost": 30, "description": "Squeak and chew" }
+    ],
+    "cat": [
+      { "id": "cat_play_1", "name": "Laser Pointer", "icon": "🔴", "cost": 2, "boost": 22, "description": "Chase the dot" },
+      { "id": "cat_play_2", "name": "Yarn Ball", "icon": "🧶", "cost": 1, "boost": 15, "description": "Classic feline fun" },
+      { "id": "cat_play_3", "name": "Feather Wand", "icon": "🪶", "cost": 3, "boost": 25, "description": "Swat and pounce" },
+      { "id": "cat_play_4", "name": "Cat Tower", "icon": "🏰", "cost": 5, "boost": 35, "description": "Climb and explore" }
+    ],
+    "fish": [
+      { "id": "fish_play_1", "name": "Bubble Ring", "icon": "🫧", "cost": 2, "boost": 18, "description": "Swim through bubbles" },
+      { "id": "fish_play_2", "name": "Mirror", "icon": "🪞", "cost": 1, "boost": 12, "description": "Admire reflection" },
+      { "id": "fish_play_3", "name": "Swim Tunnel", "icon": "🌀", "cost": 4, "boost": 28, "description": "Navigate the tunnel" },
+      { "id": "fish_play_4", "name": "Floating Log", "icon": "🪵", "cost": 3, "boost": 22, "description": "Hide and seek" }
+    ],
+    "dragon": [
+      { "id": "dragon_play_1", "name": "Fire Ring", "icon": "🔥", "cost": 3, "boost": 22, "description": "Fly through flames" },
+      { "id": "dragon_play_2", "name": "Gem Puzzle", "icon": "💎", "cost": 5, "boost": 30, "description": "Solve crystal riddles" },
+      { "id": "dragon_play_3", "name": "Flight Course", "icon": "🌪️", "cost": 6, "boost": 35, "description": "Aerial obstacle course" },
+      { "id": "dragon_play_4", "name": "Treasure Hunt", "icon": "🗺️", "cost": 4, "boost": 28, "description": "Find hidden treasure" }
+    ]
+  },
+
+  "restAction": {
+    "cost": 0,
+    "boost": 40,
+    "label": "Put pet to sleep",
+    "description": "Let your pet sleep to restore energy. Resting is free!"
+  },
+
+  "vetTreatments": [
+    { "id": "vet_1", "name": "Basic Checkup", "icon": "🩺", "cost": 5, "boost": 15, "description": "Routine physical exam" },
+    { "id": "vet_2", "name": "Vaccination", "icon": "💉", "cost": 10, "boost": 25, "description": "Immunity booster" },
+    { "id": "vet_3", "name": "Full Treatment", "icon": "🏥", "cost": 20, "boost": 40, "description": "Comprehensive care package" },
+    { "id": "vet_4", "name": "Emergency Care", "icon": "🚑", "cost": 35, "boost": 60, "description": "Intensive treatment" }
+  ],
+
+  "quizQuestions": [
+    {
+      "id": "q1",
+      "question": "How often should you feed most dogs?",
+      "options": ["Once a week", "Twice a day", "Once a month", "Every hour"],
+      "correctAnswer": 1,
+      "points": 10,
+      "category": "Pet Care"
+    },
+    {
+      "id": "q2",
+      "question": "What is the average annual cost of owning a dog?",
+      "options": ["$200", "$500", "$1,500", "$5,000"],
+      "correctAnswer": 2,
+      "points": 15,
+      "category": "Financial Literacy"
+    },
+    {
+      "id": "q3",
+      "question": "How often should cats visit the vet for checkups?",
+      "options": ["Never", "Once every 5 years", "Once a year", "Every week"],
+      "correctAnswer": 2,
+      "points": 10,
+      "category": "Pet Health"
+    },
+    {
+      "id": "q4",
+      "question": "Which of these is toxic to dogs?",
+      "options": ["Carrots", "Chocolate", "Rice", "Chicken"],
+      "correctAnswer": 1,
+      "points": 15,
+      "category": "Pet Safety"
+    },
+    {
+      "id": "q5",
+      "question": "What should you budget for pet emergencies?",
+      "options": ["$0", "$50", "$500-$1000", "Unlimited"],
+      "correctAnswer": 2,
+      "points": 20,
+      "category": "Financial Literacy"
+    },
+    {
+      "id": "q6",
+      "question": "How long do goldfish typically live?",
+      "options": ["1 year", "5-10 years", "1 month", "20 years"],
+      "correctAnswer": 1,
+      "points": 10,
+      "category": "Animal Facts"
+    },
+    {
+      "id": "q7",
+      "question": "What's the best way to bond with a new pet?",
+      "options": ["Ignore it", "Yell at it", "Spend quality time daily", "Feed only"],
+      "correctAnswer": 2,
+      "points": 10,
+      "category": "Pet Care"
+    },
+    {
+      "id": "q8",
+      "question": "Pet insurance typically costs how much per month?",
+      "options": ["$1", "$30-$50", "$500", "$1,000"],
+      "correctAnswer": 1,
+      "points": 15,
+      "category": "Financial Literacy"
+    },
+    {
+      "id": "q9",
+      "question": "How many hours do cats sleep per day?",
+      "options": ["2-4", "6-8", "12-16", "24"],
+      "correctAnswer": 2,
+      "points": 10,
+      "category": "Animal Facts"
+    },
+    {
+      "id": "q10",
+      "question": "What pH level is ideal for freshwater fish?",
+      "options": ["2-3", "6.5-7.5", "10-12", "Any pH"],
+      "correctAnswer": 1,
+      "points": 15,
+      "category": "Pet Care"
+    },
+    {
+      "id": "q11",
+      "question": "What is the biggest cost of pet ownership?",
+      "options": ["Toys", "Food over lifetime", "Collar", "Name tag"],
+      "correctAnswer": 1,
+      "points": 10,
+      "category": "Financial Literacy"
+    },
+    {
+      "id": "q12",
+      "question": "Why do cats scratch furniture?",
+      "options": ["To be mean", "Mark territory & sharpen claws", "They're bored", "No reason"],
+      "correctAnswer": 1,
+      "points": 10,
+      "category": "Animal Facts"
+    },
+    {
+      "id": "q13",
+      "question": "What does microchipping a pet do?",
+      "options": ["Makes them smart", "Helps identify lost pets", "Gives WiFi", "Tracks exercise"],
+      "correctAnswer": 1,
+      "points": 15,
+      "category": "Pet Safety"
+    },
+    {
+      "id": "q14",
+      "question": "What is a sign a pet might be sick?",
+      "options": ["Eating normally", "Playing a lot", "Not eating or drinking", "Wagging tail"],
+      "correctAnswer": 2,
+      "points": 10,
+      "category": "Pet Health"
+    },
+    {
+      "id": "q15",
+      "question": "How often should a fish tank be cleaned?",
+      "options": ["Every day", "Every 1-2 weeks", "Once a year", "Never"],
+      "correctAnswer": 1,
+      "points": 10,
+      "category": "Pet Care"
+    },
+    {
+      "id": "q16",
+      "question": "What vitamin do fish get from tank lighting?",
+      "options": ["Vitamin A", "Vitamin D", "Vitamin C", "B12"],
+      "correctAnswer": 1,
+      "points": 15,
+      "category": "Pet Care"
+    }
+  ],
+
+  "rooms": {
+    "feed": {
+      "dog": {
+        "name": "Dog Kitchen",
+        "description": "A warm country kitchen with wooden cabinets and a food bowl",
+        "backgroundGradient": "linear-gradient(180deg, #FFF8E1 0%, #FFECB3 60%, #8D6E63 60%, #6D4C41 100%)",
+        "decorations": ["🍖", "🥣", "🦴", "🍗"]
+      },
+      "cat": {
+        "name": "Cat Kitchen",
+        "description": "An elegant pink kitchen with a fancy food dish",
+        "backgroundGradient": "linear-gradient(180deg, #FCE4EC 0%, #F8BBD0 50%, #D7CCC8 50%, #BCAAA4 100%)",
+        "decorations": ["🐟", "🥛", "🍣", "🥣"]
+      },
+      "fish": {
+        "name": "Feeding Grotto",
+        "description": "An underwater grotto with scattered food among plants and coral",
+        "backgroundGradient": "linear-gradient(180deg, #0D47A1 0%, #1565C0 40%, #1B5E20 70%, #0D47A1 100%)",
+        "decorations": ["✨", "🦐", "🪱", "🫧"]
+      },
+      "dragon": {
+        "name": "Volcanic Kitchen",
+        "description": "A fire-lit volcanic chamber with lava-heated cooking surfaces",
+        "backgroundGradient": "linear-gradient(180deg, #1a0a2e 0%, #4A148C 30%, #BF360C 70%, #E65100 100%)",
+        "decorations": ["🌶️", "🥩", "🍰", "🔥", "💎"]
+      }
+    },
+    "play": {
+      "dog": {
+        "name": "Dog Park",
+        "description": "A sunny open park with green grass and blue sky",
+        "backgroundGradient": "linear-gradient(180deg, #81D4FA 0%, #4FC3F7 40%, #66BB6A 40%, #43A047 100%)",
+        "decorations": ["🎾", "🥏", "🦮", "☀️"]
+      },
+      "cat": {
+        "name": "Cat Playroom",
+        "description": "A cozy room with climbing towers, feathers, and yarn",
+        "backgroundGradient": "linear-gradient(180deg, #F3E5F5 0%, #E1BEE7 40%, #FFCCBC 40%, #FFAB91 100%)",
+        "decorations": ["🧶", "🪶", "🔴"]
+      },
+      "fish": {
+        "name": "Underwater Playground",
+        "description": "An aquatic play area with tunnels, rings and mirrors",
+        "backgroundGradient": "linear-gradient(180deg, #0097A7 0%, #00838F 50%, #004D40 100%)",
+        "decorations": ["🫧", "🪞", "🌀", "🪵"]
+      },
+      "dragon": {
+        "name": "Flight Arena",
+        "description": "A vast cave arena with fire rings and gem puzzles",
+        "backgroundGradient": "linear-gradient(180deg, #311B92 0%, #4527A0 50%, #1A237E 100%)",
+        "decorations": ["🔥", "💎", "🌪️", "⭐", "🗺️"]
+      }
+    },
+    "rest": {
+      "dog": {
+        "name": "Dog Bedroom",
+        "description": "A cozy moonlit room with a soft dog bed",
+        "backgroundGradient": "linear-gradient(180deg, #1A237E 0%, #283593 40%, #5D4037 40%, #4E342E 100%)",
+        "decorations": ["🌙", "⭐", "💤"]
+      },
+      "cat": {
+        "name": "Cat Bedroom",
+        "description": "A dark, warm room with a cushion on a shelf",
+        "backgroundGradient": "linear-gradient(180deg, #1A237E 0%, #283593 30%, #4E342E 30%, #3E2723 100%)",
+        "decorations": ["🌙", "⭐", "💤"]
+      },
+      "fish": {
+        "name": "Resting Reef",
+        "description": "A calm, dimly lit underwater area with soft plant beds",
+        "backgroundGradient": "linear-gradient(180deg, #0D47A1 0%, #01579B 50%, #002f6c 100%)",
+        "decorations": ["🌙", "💤"]
+      },
+      "dragon": {
+        "name": "Crystal Den",
+        "description": "A dark cave chamber with glowing crystals and a soft rock bed",
+        "backgroundGradient": "linear-gradient(180deg, #0D0221 0%, #1a0533 50%, #261447 100%)",
+        "decorations": ["⭐", "✨", "🌙", "💤"]
+      }
+    },
+    "clean": {
+      "dog": {
+        "name": "Dog Bathroom",
+        "description": "A bright blue bathroom with a bathtub and bubbles",
+        "backgroundGradient": "linear-gradient(180deg, #E3F2FD 0%, #BBDEFB 50%, #90CAF9 50%, #64B5F6 100%)",
+        "decorations": ["🛁", "🧴", "🫧", "🧼"]
+      },
+      "cat": {
+        "name": "Cat Spa",
+        "description": "A purple-toned spa with a gentle wash basin",
+        "backgroundGradient": "linear-gradient(180deg, #F3E5F5 0%, #E1BEE7 50%, #CE93D8 50%, #BA68C8 100%)",
+        "decorations": ["🧴", "🛁", "✨"]
+      },
+      "fish": {
+        "name": "Cleaning Current",
+        "description": "A crystal-clear water zone with cleansing bubbles",
+        "backgroundGradient": "linear-gradient(180deg, #E0F7FA 0%, #80DEEA 40%, #00ACC1 100%)",
+        "decorations": ["🫧", "✨", "💧"]
+      },
+      "dragon": {
+        "name": "Dragon Bath",
+        "description": "A warm stone bathing pool inside the cave",
+        "backgroundGradient": "linear-gradient(180deg, #E8EAF6 0%, #C5CAE9 50%, #7986CB 100%)",
+        "decorations": ["🛁", "🧴", "🫧"]
+      }
+    },
+    "vet": {
+      "shared": {
+        "name": "Vet Clinic",
+        "description": "A clean, professional veterinary clinic with medical equipment",
+        "backgroundGradient": "linear-gradient(180deg, #ECEFF1 0%, #CFD8DC 50%, #B0BEC5 100%)",
+        "decorations": ["➕", "🩺", "💊", "🏥"]
+      }
+    }
+  },
+
+  "homeEnvironments": {
+    "dog": {
+      "name": "Park",
+      "description": "A sunny park with green grass, trees, a doghouse, and a walking path",
+      "backgroundGradient": "linear-gradient(180deg, #64B5F6 0%, #90CAF9 35%, #7CB342 55%, #558B2F 100%)",
+      "decorations": ["☁️", "☀️", "🌳", "🌻", "🌷"],
+      "features": ["doghouse", "walking_path", "trees", "flowers"]
+    },
+    "cat": {
+      "name": "Living Room",
+      "description": "A cozy apartment with a sofa, window, bookshelf, and cat tower",
+      "backgroundGradient": "linear-gradient(180deg, #FFF8E1 0%, #FFECB3 40%, #D7CCC8 40%, #BCAAA4 100%)",
+      "decorations": ["📚", "🧶"],
+      "features": ["window", "sofa", "cat_tower", "bookshelf"]
+    },
+    "fish": {
+      "name": "Aquarium",
+      "description": "A large, lush aquarium with dense plants, coral, gravel, rocks, shells, bubbles, and light rays",
+      "backgroundGradient": "linear-gradient(180deg, #0277BD 0%, #01579B 25%, #0D47A1 50%, #0a3d6b 80%, #1B5E20 92%, #2E7D32 100%)",
+      "decorations": ["🪸", "🐚", "🗝️", "🫧"],
+      "features": ["dense_plants", "gravel_floor", "rocks", "coral", "treasure_key", "shells", "bubbles", "light_rays"],
+      "plantPositions": [3, 10, 18, 26, 34, 42, 50, 58, 66, 74, 82, 90],
+      "plantHeights": [60, 80, 50, 90, 70, 55, 65, 85, 45, 75, 60, 50]
+    },
+    "dragon": {
+      "name": "Enchanted Cave",
+      "description": "A dark crystal cave with gems, lava glow, rock formations, and a starry sky entrance",
+      "backgroundGradient": "linear-gradient(180deg, #0D0221 0%, #1a0533 30%, #2d1b4e 60%, #4a1a1a 100%)",
+      "decorations": ["⭐", "✨", "💎", "🔥"],
+      "features": ["rock_formations", "gems", "fire_glow", "stars"]
+    }
+  },
+
+  "speechBubbles": {
+    "happy": "I'm so happy! 😊",
+    "sad": "I need care 💙",
+    "sick": "I feel sick 🤒",
+    "neutral": "Hi! I'm {petName} 👋"
+  },
+
+  "careTips": [
+    { "condition": "hunger < 30", "message": "⚠️ Your pet is hungry! Tap Feed to visit the kitchen." },
+    { "condition": "health < 40", "message": "🏥 Your pet needs a vet visit! Health is getting low." },
+    { "condition": "energy < 30", "message": "😴 Your pet is tired! Let them rest in the bedroom." },
+    { "condition": "cleanliness < 30", "message": "🛁 Time for a bath! Visit the bathroom." },
+    { "condition": "default", "message": "✅ Great job! Keep up with regular care to maintain happiness." }
+  ],
+
+  "expenseCategories": {
+    "feed": { "label": "Food", "color": "#FF9800", "icon": "🍖" },
+    "play": { "label": "Toys", "color": "#4CAF50", "icon": "🎾" },
+    "clean": { "label": "Grooming", "color": "#2196F3", "icon": "🛁" },
+    "vet": { "label": "Vet", "color": "#F44336", "icon": "💊" },
+    "rest": { "label": "Comfort", "color": "#9C27B0", "icon": "💤" }
+  },
+
+  "validation": {
+    "petName": {
+      "minLength": 1,
+      "maxLength": 20,
+      "pattern": "^[a-zA-Z0-9 ]+$",
+      "errors": {
+        "empty": "Please enter a name!",
+        "tooLong": "Max 20 characters",
+        "invalidChars": "Letters, numbers and spaces only",
+        "noPetSelected": "Please choose a pet!"
+      }
+    }
+  },
+
+  "uiTheme": {
+    "primaryGradient": "linear-gradient(160deg, #0A1628, #1A237E)",
+    "accentColor": "#1A237E",
+    "coinColor": "#FFD700",
+    "fontFamily": "'SF Pro Display', -apple-system, system-ui, sans-serif",
+    "borderRadius": {
+      "small": 10,
+      "medium": 16,
+      "large": 20
+    }
+  }
+}
